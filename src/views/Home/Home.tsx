@@ -2,6 +2,12 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Home.module.css";
 
+declare global {
+  interface Window {
+    navigateToAbout: any;
+  }
+}
+
 const Home = () => {
   const navigate = useNavigate();
 
