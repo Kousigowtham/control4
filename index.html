@@ -9,5 +9,50 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <div>
+      <iframe
+        sandbox="allow-forms allow-scripts allow-same-origin allow-modals allow-popups allow-popups-to-escape-sandbox allow-top-navigation"
+        src="https://devportal.pepcare.com/widget?id=1002"
+        onLoad="autoResize('myIframe');"
+        allowtransparency="true"
+        height="37px"
+        width="250px"
+        scrolling="no"
+        style="
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+          border-radius: 7px;
+          overflow: hidden;
+          border: none;
+          background: transparent;
+          position: fixed;
+          inset: 90% 0% 0% 84%;
+          transform: translate(-50%, -50%);
+        "
+        id="myIframe"
+        data-custom-attribute="sample"
+      ></iframe>
+    </div>
+    <script>
+      // Get a reference to the child iframe
+      const child = document.getElementById("myIframe").contentWindow;
+      let iframe = document.getElementById("myIframe");
+      // Send a message from the parent window to the child
+      child.postMessage("Hello from parent!", "*");
+      // Listen for messages from the child
+      window.addEventListener("message", (event) => {
+        console.log("Received message from child:", event.data);
+        let message = event.data;
+        iframe.style.height = message.height + "px";
+        iframe.style.width = message.width + "px";
+        iframe.style.position = message.position;
+        iframe.style.transform = message.transform;
+        iframe.style.top = message.top;
+        iframe.style.left = message.left;
+        iframe.style.bottom = message.bottom;
+        iframe.style.right = message.right;
+        iframe.style.inset = message.inset;
+        console.log(iframe);
+      });
+    </script>
   </body>
 </html>
